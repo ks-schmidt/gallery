@@ -14,7 +14,6 @@ $container = $app->getContainer();
 $container['view'] = new \Slim\Views\PhpRenderer("../templates/");
 
 $app->get('/scan', function (Request $request, Response $response) {
-    $name = $request->getAttribute('name');
 
     $dir = new RecursiveIteratorIterator(
         new RecursiveRegexIterator(
@@ -25,7 +24,7 @@ $app->get('/scan', function (Request $request, Response $response) {
         ),
         true
     );
-    
+
     $it = 0;
     foreach ($dir as $file) {
         echo sprintf("%s</br>\n", $file->getPathname());
@@ -34,7 +33,7 @@ $app->get('/scan', function (Request $request, Response $response) {
 
     echo $it;
 
-    $response = $this->view->render($response, "index.phtml", ["files" => $files]);
+    $response = $this->view->render($response, "index.phtml", []);
 
     return $response;
 
