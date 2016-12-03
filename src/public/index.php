@@ -25,11 +25,7 @@ $app->get('/scan', function (Request $request, Response $response) {
         ),
         true
     );
-
-//    $Directory = new RecursiveDirectoryIterator('/var/services/media/media/photo/');
-//    $Iterator = new RecursiveIteratorIterator($Directory, true);
-//    $Regex = new RegexIterator($Iterator, '/^.+\.jpg$/i', RecursiveRegexIterator::GET_MATCH);    
-
+    
     $it = 0;
     foreach ($dir as $file) {
         echo sprintf("%s</br>\n", $file->getPathname());
