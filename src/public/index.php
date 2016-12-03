@@ -13,7 +13,7 @@ $app = new \Slim\App(["settings" => $config]);
 $container = $app->getContainer();
 $container['view'] = new \Slim\Views\PhpRenderer("../templates/");
 
-$app->get('/scan', function (Request $request, Response $response) {
+$app->get('/path/to/scan', function (Request $request, Response $response) {
 
     $dir = new RecursiveIteratorIterator(
         new RecursiveRegexIterator(
