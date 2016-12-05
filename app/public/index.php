@@ -20,7 +20,7 @@ $templateDefaultVariables = [
 ];
 
 $container = $app->getContainer();
-$container['view'] = new \Slim\Views\PhpRenderer("../templates/", $templateDefaultVariables);
+$container['view'] = new \Slim\Views\PhpRenderer("../src/view/", $templateDefaultVariables);
 
 $app->get('/gallery', function (Request $request, Response $response) {
 
