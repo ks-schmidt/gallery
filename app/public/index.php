@@ -1,24 +1,33 @@
 <?php
+
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 require '../../vendor/autoload.php';
 
+// Environment variables
+(new Dotenv\Dotenv(__DIR__ . '/../'))->load();
+
 $config = [];
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
+$config['outputBuffering'] = false;
 
 $app = new \Slim\App(["settings" => $config]);
 
+$templateDefaultVariables = [
+    "title" => "Default Title",
+];
+
 $container = $app->getContainer();
-$container['view'] = new \Slim\Views\PhpRenderer("../templates/");
+$container['view'] = new \Slim\Views\PhpRenderer("../templates/", $templateDefaultVariables);
 
 $app->get('/path/to/scan', function (Request $request, Response $response) {
 
     $dir = new RecursiveIteratorIterator(
         new RecursiveRegexIterator(
             new RecursiveDirectoryIterator(
-                '/var/services/media/media/photo/'
+                '/var/services/photo/LOMO'
             ),
             '#(?<!/)\.jpg$|^[^\.]*$#i'
         ),

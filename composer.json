@@ -1,6 +1,13 @@
 {
     "require": {
         "slim/slim": "^3.6",
-        "slim/php-view": "^2.2"
+        "slim/php-view": "^2.2",
+        "vlucas/phpdotenv": "^2.4"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "app\\": "src/"
+        }
     }
 }
