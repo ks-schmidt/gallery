@@ -12,24 +12,23 @@ require '../../vendor/autoload.php';
 $config = [];
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
-$config['outputBuffering'] = false;
 
 $app = new \Slim\App(["settings" => $config]);
 
 $templateDefaultVariables = [
-    "title" => "Default Title",
+    "title" => "gallery",
 ];
 
 $container = $app->getContainer();
-$container['view'] = function ($container) {
-    $view = new \Slim\View("../src/view/");
+$container['view'] = function ($container) use ($templateDefaultVariables) {
+    $view = new \Slim\View("../src/view/", $templateDefaultVariables);
     $view->setLayout("common/layout/bootstrap.phtml");
 
     return $view;
 };
 
 $app->get('/gallery', function (Request $request, Response $response) {
-    $response = $this->view->render($response, "gallery/index.phtml", ['content' => 'hello']);
+    $response = $this->view->render($response, "gallery/index.phtml", ['content' => 'gallery']);
     return $response;
 
 });
