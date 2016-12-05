@@ -4,6 +4,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 require '../../vendor/autoload.php';
+//require '../src/common/View.php';
 
 // Environment variables
 (new Dotenv\Dotenv(__DIR__ . '/../'))->load();
@@ -20,30 +21,15 @@ $templateDefaultVariables = [
 ];
 
 $container = $app->getContainer();
-$container['view'] = new \Slim\Views\PhpRenderer("../src/view/", $templateDefaultVariables);
+$container['view'] = function ($container) {
+    $view = new \Slim\View("../src/view/");
+    $view->setLayout("common/layout/bootstrap.phtml");
+
+    return $view;
+};
 
 $app->get('/gallery', function (Request $request, Response $response) {
-
-    $dir = new RecursiveIteratorIterator(
-        new RecursiveRegexIterator(
-            new RecursiveDirectoryIterator(
-                '/var/services/photo/LOMO'
-            ),
-            '#(?<!/)\.jpg$|^[^\.]*$#i'
-        ),
-        true
-    );
-
-    $it = 0;
-    foreach ($dir as $file) {
-        echo sprintf("%s</br>\n", $file->getPathname());
-        $it++;
-    }
-
-    echo $it;
-
-    $response = $this->view->render($response, "index.phtml", []);
-
+    $response = $this->view->render($response, "gallery/index.phtml", ['content' => 'hello']);
     return $response;
 
 });
