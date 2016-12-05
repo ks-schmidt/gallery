@@ -22,7 +22,7 @@ $templateDefaultVariables = [
 $container = $app->getContainer();
 $container['view'] = new \Slim\Views\PhpRenderer("../templates/", $templateDefaultVariables);
 
-$app->get('/path/to/scan', function (Request $request, Response $response) {
+$app->get('/gallery', function (Request $request, Response $response) {
 
     $dir = new RecursiveIteratorIterator(
         new RecursiveRegexIterator(
