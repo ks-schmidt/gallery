@@ -7,7 +7,7 @@
 
     "autoload": {
         "psr-4": {
-            "Slim/Views\\": "src/common/slim/php-view"
+            "Slim\\": "src/common/slim/php-view"
         }
     }
 }
