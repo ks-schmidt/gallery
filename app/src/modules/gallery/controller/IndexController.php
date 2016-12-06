@@ -5,6 +5,9 @@ namespace Gallery;
 use Slim;
 use Gallery\Common\Controller;
 
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+
 class IndexController extends Controller
 {
     private static $instance;

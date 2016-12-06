@@ -2,7 +2,6 @@
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-use \Gallery\IndexController;
 
 require '../../vendor/autoload.php';
 
@@ -22,6 +21,8 @@ $container['view'] = function ($container) {
     return $view;
 };
 
-IndexController::registerRoutes($app);
+require "../src/common/Controller.php";
+require "../src/modules/gallery/controller/IndexController.php";
+\Gallery\IndexController::registerRoutes($app);
 
 $app->run();
