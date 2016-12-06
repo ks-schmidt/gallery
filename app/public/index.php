@@ -4,25 +4,39 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 require '../../vendor/autoload.php';
+//require '../src/common/View.php';
 
-$dotEnv = new Dotenv\Dotenv(__DIR__ . '/../');
-$dotEnv->load();
+// Environment variables
+(new Dotenv\Dotenv(__DIR__ . '/../'))->load();
 
-$app = new \Slim\App(["settings" => []]);
+$config = [];
+$config['displayErrorDetails'] = true;
+$config['addContentLengthHeader'] = false;
+
+$app = new \Slim\App(["settings" => $config]);
 
 $templateDefaultVariables = [
     "title" => "gallery",
 ];
 
 $container = $app->getContainer();
-$container['view'] = function ($container) {
-    $view = new \Slim\View("../src/view/");
+$container['view'] = function ($container) use ($templateDefaultVariables) {
+    $view = new \Slim\View("../src/view/", $templateDefaultVariables);
     $view->setLayout("common/layout/bootstrap.phtml");
+
     return $view;
 };
 
-require "../src/common/Controller.php";
-require "../src/modules/gallery/controller/IndexController.php";
-\Gallery\IndexController::registerRoutes($app);
+use \Gallery\IndexController;
+$container[\Gallery\IndexController::class] = function ($c) {
+    return new \Gallery\IndexController();
+};
 
+$app->get('/', \Gallery\IndexController::class . ":index");
+
+//$app->get('/', function (Request $request, Response $response) {
+//    $response = $this->view->render($response, "gallery/index.phtml", ['content' => 'gallery']);
+//    return $response;
+//
+//});
 $app->run();
