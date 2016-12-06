@@ -32,11 +32,8 @@ $container[\Gallery\controller\IndexController::class] = function ($c) {
     return new \Gallery\controller\IndexController;
 };
 
-$app->get('/', \Gallery\controller\IndexController::class . ":index");
-
-//$app->get('/', function (Request $request, Response $response) {
-//    $response = $this->view->render($response, "gallery/index.phtml", ['content' => 'gallery']);
-//    return $response;
-//
-//});
+$app->get('/', function (Request $request, Response $response) {
+    $controller = new Gallery\controller\IndexController($this->getContainer());
+    return $controller->index($request, $response);
+});
 $app->run();
