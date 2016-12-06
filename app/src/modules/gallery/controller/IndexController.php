@@ -1,6 +1,6 @@
 <?php
 
-namespace Gallery\Controller;
+namespace Gallery\controller;
 
 class IndexController
 {

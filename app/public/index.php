@@ -27,12 +27,12 @@ $container['view'] = function ($container) use ($templateDefaultVariables) {
     return $view;
 };
 
-use \Gallery\Controller\IndexController;
-$container[\Gallery\Controller\IndexController::class] = function ($c) {
-    return new \Gallery\Controller\IndexController();
+use \Gallery\controller\IndexController;
+$container[\Gallery\controller\IndexController::class] = function ($c) {
+    return new \Gallery\controller\IndexController;
 };
 
-$app->get('/', \Gallery\Controller\IndexController::class . ":index");
+$app->get('/', \Gallery\controller\IndexController::class . ":index");
 
 //$app->get('/', function (Request $request, Response $response) {
 //    $response = $this->view->render($response, "gallery/index.phtml", ['content' => 'gallery']);

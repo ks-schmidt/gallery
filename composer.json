@@ -8,7 +8,6 @@
     "autoload": {
         "psr-4": {
             "Gallery\\": "app/src/modules/gallery",
-            "Gallery\\Common\\": "app/src/common",
             "Slim\\": "app/src/common/slim/php-view"
         }
     }
