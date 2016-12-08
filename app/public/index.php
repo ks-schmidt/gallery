@@ -28,8 +28,7 @@ $container['view'] = function ($container) use ($templateDefaultVariables) {
 };
 
 $app->get('/[{path:.*}]', function (Request $request, Response $response) use ($container) {
-    $service = new Gallery\Reader\Service();
-    return $this->view->render($response, "gallery/index.phtml", ['content' => $service->getStuff()]);
+    return $this->view->render($response, "gallery/index.phtml", ['content' => $request->getUri()->getPath()]);
 });
 
 
