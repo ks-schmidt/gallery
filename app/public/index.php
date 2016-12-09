@@ -4,9 +4,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 require '../../vendor/autoload.php';
-//require '../src/common/View.php';
 
-// Environment variables
 (new Dotenv\Dotenv(__DIR__ . '/../'))->load();
 
 $config = [];
@@ -15,20 +13,26 @@ $config['addContentLengthHeader'] = false;
 
 $app = new \Slim\App(["settings" => $config]);
 
-$templateDefaultVariables = [
-    "title" => "gallery",
-];
-
 $container = $app->getContainer();
-$container['view'] = function ($container) use ($templateDefaultVariables) {
-    $view = new \Slim\View("../src/view/", $templateDefaultVariables);
+$container['view'] = function ($container) {
+    $view = new \Slim\View("../src/view/");
     $view->setLayout("common/layout/bootstrap.phtml");
 
     return $view;
 };
 
 $app->get('/[{path:.*}]', function (Request $request, Response $response) use ($container) {
-    return $this->view->render($response, "gallery/index.phtml", ['content' => $request->getUri()->getPath()]);
+
+    $service = new Gallery\Gallery\Service($request, $response, $container);
+
+    return $this->view->render(
+        $response, "gallery/index.phtml", [
+            'navigation' => $service->getNavigation(),
+
+            'folders' => $service->getFolders(),
+            'files'   => $service->getFiles(),
+        ]
+    );
 });
 
 
