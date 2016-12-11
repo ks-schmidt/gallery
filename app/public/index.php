@@ -27,7 +27,7 @@ $app->get('/[{path:.*}]', function (Request $request, Response $response) use ($
 
     return $this->view->render(
         $response, "gallery/index.phtml", [
-            'navigation' => $service->getNavigation(),
+            'breadcrumb' => $service->getNavigation(),
 
             'folders' => $service->getFolders(),
             'files'   => $service->getFiles(),

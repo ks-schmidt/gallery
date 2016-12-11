@@ -1,3 +1,9 @@
+<div class="row">
+    <div class="col-xs-12">
+        <?= $this->fetch('common/partial/image.phtml', ['breadcrumb' => $breadcrumb]); ?>
+    </div>
+</div>
+
 <div id="lightgallery">
     <?= $this->fetch('gallery/partial/image.phtml', ['files' => $files]); ?>
 </div>
