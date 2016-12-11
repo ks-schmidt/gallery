@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/plugin/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/plugin/bootstrap/css/bootstrap-theme.min.css">
 
-    <link type="text/css" rel="stylesheet" href="/plugin/lightgallery/css/lightgallery.min.css" />
+    <link type="text/css" rel="stylesheet" href="/plugin/lightgallery/css/lightgallery.min.css"/>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,6 +22,7 @@
 </head>
 <body>
 
+<div class="container">
     <div id="lightgallery">
         <a href="http://carokarsten.ddns.net/storage/calendar/00.jpg">
             <img src="http://carokarsten.ddns.net/storage/calendar/00.jpg" width="200px"/>
@@ -54,6 +55,7 @@
             <img src="http://carokarsten.ddns.net/storage/calendar/09.jpg" width="200px"/>
         </a>
     </div>
+</div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -71,10 +73,8 @@
 <script src="/plugin/lightgallery/js/lg-zoom.min.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $("#lightgallery").lightGallery({
-
-        });
+    $(document).ready(function () {
+        $("#lightgallery").lightGallery({});
     });
 </script>
 
