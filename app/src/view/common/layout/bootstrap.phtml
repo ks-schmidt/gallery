@@ -22,8 +22,6 @@
 </head>
 <body>
 
-<div class="container">
-
     <div id="lightgallery">
         <a href="http://carokarsten.ddns.net/storage/calendar/03.jpg">
             <img src="http://carokarsten.ddns.net/storage/calendar/03.jpg" width="200px"/>
@@ -32,8 +30,6 @@
             <img src="http://carokarsten.ddns.net/storage/calendar/06.jpg" width="200px"/>
         </a>
     </div>
-
-</div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -45,6 +41,12 @@
 <script src="/plugin/bootstrap/js/bootstrap.min.js"></script>
 
 <script src="/plugin/lightgallery/js/lightgallery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#lightgallery").lightGallery();
+    });
+</script>
 
 </body>
 </html>
