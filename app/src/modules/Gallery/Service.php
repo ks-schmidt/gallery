@@ -8,7 +8,7 @@ class Service extends \Gallery\Service
     {
         $result = [];
 
-        $path = explode('/', $this->_request->getUri()->getPath());
+        $path = explode('/', 'a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z');
         foreach ($path as $folder) {
             $result[implode( '/', array_merge($result, [$folder]) )] = $folder;
         }
