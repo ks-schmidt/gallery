@@ -1,4 +1,13 @@
-<a data-sub-html="#sub" href="http://carokarsten.ddns.net/storage/calendar/00.jpg">
-    <img src="http://carokarsten.ddns.net/storage/calendar/00.jpg" width="190px"/>
-    <?= $this->fetch( 'gallery/partial/description.phtml', [] ); ?>
+<?php foreach ($files as $key => $file) : ?>
+<a data-sub-html="#img-<?= $key ?>" href="http://carokarsten.ddns.net/storage/calendar/<?= $file ?>">
+    <img src="http://carokarsten.ddns.net/storage/calendar/<?= $file ?>" width="190px"/>
+    <?php
+        echo $this->fetch(
+            'gallery/partial/description.phtml', [
+                'id' => $key,
+                'description' => 'description'
+            ]
+        );
+    ?>
 </a>
+<?php endforeach; ?>

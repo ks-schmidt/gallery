@@ -16,6 +16,8 @@ class Service extends \Gallery\Service
 
     public function getFiles()
     {
-        return "files";
+        return [
+            "00.jpg"
+        ];
     }
 }
