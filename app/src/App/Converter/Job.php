@@ -5,7 +5,7 @@ namespace Gallery\App\Converter;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-use Eventviva\ImageResize;
+use Gregwar\Image\Image;
 use Gallery\App\Helper\Path;
 
 class Job
@@ -46,10 +46,7 @@ class Job
 
     protected function convert($file, $tWidth, $tHeight)
     {
-        $image = new ImageResize($file);
-        $image->crop($tWidth, $tHeight);
-
-        return $image;
+        return Image::open($file)->zoomCrop($tWidth, $tHeight);
     }
 
     protected function transform($file)
