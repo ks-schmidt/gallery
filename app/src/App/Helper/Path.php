@@ -51,4 +51,19 @@ class Path
 
         return rtrim('/' . join('/', array_diff($pathArray, $sPathArray, $tPathArray)), '/');
     }
+
+    protected static $paths = [];
+
+    public function createDirectory($directory)
+    {
+        if (!isset($paths[ $directory ])) {
+            if (!is_dir($directory)) {
+                $paths[ $directory ] = true;
+
+                return mkdir($directory, 0777, true);
+            }
+        }
+
+        return true;
+    }
 }

@@ -14,10 +14,16 @@ return [
         'converter' => [
             'source' => [
                 'path' => '/server/http/source',
+                'type' => '/.*\.jpe?g$/i',
             ],
 
             'target' => [
                 'path' => '/server/http/app/public/storage',
+                'type' => [
+                    'download' => '/.*.dl\.jpe?g$/i',
+                    'preview'  => '/.*.pv\.jpe?g$/i',
+                    'thumb'    => '/.*.tn\.jpe?g$/i',
+                ],
             ],
         ],
     ],

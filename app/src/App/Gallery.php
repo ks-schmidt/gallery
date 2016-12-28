@@ -61,11 +61,18 @@ class Gallery
             }
 
             if ($fileInfo->isFile()) {
-                if (preg_match('/.*\.jpe?g$/i', $fileInfo->getBasename())) {
+                if (preg_match('/.*.tn\.jpe?g$/i', $fileInfo->getBasename())) {
+                    $fThumb = $this->getRelativePath($fileInfo->getRealPath());
+                    $fPreview = str_replace('.tn.', '.pv.', $fThumb);
+                    $fDownload = str_replace('.pv.', '.dl.', $fPreview);
+
                     $files[] = [
-                        "idx"         => "idx",
-                        "thumbnail"   => $this->getRelativePath($fileInfo->getRealPath()),
-                        "file"        => $this->getRelativePath($fileInfo->getRealPath()),
+                        "idx" => "idx",
+
+                        "download" => $fDownload,
+                        "preview"  => $fPreview,
+                        "thumb"    => $fThumb,
+
                         "title"       => $fileInfo->getBasename(),
                         "description" => "description",
                     ];
