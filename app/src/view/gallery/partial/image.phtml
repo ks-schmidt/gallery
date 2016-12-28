@@ -1,13 +1,16 @@
-<?php foreach ($files as $key => $file) : ?>
-<a data-sub-html="#img-description-<?= $key ?>" href="http://carokarsten.ddns.net/storage/calendar/<?= $file ?>">
-    <img src="http://carokarsten.ddns.net/storage/calendar/<?= $file ?>" width="190px"/>
-    <?php
-        echo $this->fetch(
-            'gallery/partial/description.phtml', [
-                'id' => $key,
-                'description' => 'description'
-            ]
-        );
-    ?>
-</a>
+<?php foreach ($files as $file) : ?>
+    <div class="gallery-item">
+        <div class="gallery-image" title="image">
+            <a href="<?= $path . $file["file"] ?>" data-sub-html="#img-description-<?= $file["idx"] ?>"><img src="<?= $path . $file["thumbnail"] ?>"/></a>
+            <div class="gallery-folder-image-count">
+                <?= $file["idx"] ?>
+            </div>
+            <div class="gallery-image-filename">
+                <?= $file["title"] ?>
+            </div>
+        </div>
+        <?= $this->fetch('gallery/partial/description.phtml', ['idx' => $file["idx"], 'description' => $file['description']]); ?>
+    </div>
 <?php endforeach; ?>
+
+

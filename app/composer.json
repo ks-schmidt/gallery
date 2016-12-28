@@ -1,0 +1,19 @@
+{
+    "require": {
+        "slim/slim": "^3.6",
+        "slim/php-view": "^2.2",
+        "vlucas/phpdotenv": ">=2.4.0",
+        "monolog/monolog": ">=1.22.0",
+        "doctrine/dbal": ">=2.5.5",
+        "eventviva/php-image-resize": "1.6.*"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Gallery\\": "../app/src/"
+        }
+    },
+    "require-dev": {
+        "zeuxisoo/slim-whoops": "^0.5.1"
+    }
+}

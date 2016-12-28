@@ -1,5 +1,7 @@
-<ol class="breadcrumb">
-    <?php foreach ($breadcrumb as $link => $linkname) : ?>
-        <li><a href="/<?= $link ?>"><?= $linkname ?></a></li>
-    <?php endforeach; ?>
-</ol>
+<div class="mtxl mb">
+    <ol class="breadcrumb">
+        <?php foreach ($breadcrumb as $idx => $folder) : ?>
+            <li><a href="<?= $folder['path'] ?>"><?= $folder['name'] ?></a></li>
+        <?php endforeach; ?>
+    </ol>
+</div>

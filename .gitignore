@@ -1,3 +1,7 @@
 .*
 !.gitignore
-vendor/
+
+app/vendor/
+app/public/storage/*
+
+logs/*

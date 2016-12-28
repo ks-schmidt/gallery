@@ -5,13 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>gallery</title>
+    <title>...</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="/plugin/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/plugin/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/style/extensions/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/style/extensions/bootstrap/css/bootstrap-theme.min.css">
 
-    <link type="text/css" rel="stylesheet" href="/plugin/lightgallery/css/lightgallery.min.css"/>
+    <link type="text/css" rel="stylesheet" href="/style/extensions/lightgallery/css/lightgallery.min.css"/>
+    <link type="text/css" rel="stylesheet" href="/style/extensions/animate/animate.css">
+    <link type="text/css" rel="stylesheet" href="/style/gallery.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,17 +35,36 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="/plugin/bootstrap/js/bootstrap.min.js"></script>
+<script src="/style/extensions/bootstrap/js/bootstrap.min.js"></script>
 
-<script src="/plugin/lightgallery/js/lightgallery.min.js"></script>
-<script src="/plugin/lightgallery/js/lg-autoplay.min.js"></script>
-<script src="/plugin/lightgallery/js/lg-fullscreen.min.js"></script>
-<script src="/plugin/lightgallery/js/lg-video.min.js"></script>
-<script src="/plugin/lightgallery/js/lg-zoom.min.js"></script>
+<script src="/style/extensions/lightgallery/js/lightgallery.min.js"></script>
+<script src="/style/extensions/lightgallery/js/lg-autoplay.min.js"></script>
+<script src="/style/extensions/lightgallery/js/lg-fullscreen.min.js"></script>
+<script src="/style/extensions/lightgallery/js/lg-video.min.js"></script>
+<script src="/style/extensions/lightgallery/js/lg-zoom.min.js"></script>
+
+<script src="/style/extensions/notify/bootstrap-notify.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#lightgallery").lightGallery({});
+        $("#lightgallery").lightGallery({"selector": ".gallery-image > a"});
+
+
+//        $.notify({
+//            message: 'NOTIFICATION'
+//        }, {
+//            type: 'gallery',
+//            placement: {
+//                from: "top",
+//                align: "right"
+//            },
+//            allow_dismiss: true,
+//            delay: 0,
+//            animate: {
+//                enter: 'animated fadeInRight',
+//                exit: 'animated fadeOutRight'
+//            }
+//        });
     });
 </script>
 

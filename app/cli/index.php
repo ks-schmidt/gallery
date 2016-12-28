@@ -2,25 +2,35 @@
 
 if ('cli' == PHP_SAPI) {
 
-    // Autoloader
-    require_once __DIR__ . '/../vendor/autoload.php';
+    date_default_timezone_set("Europe/Berlin");
+    require __DIR__ . '/../vendor/autoload.php';
 
-    // Environment variables
-    (new Dotenv\Dotenv(__DIR__ . '/../'))->load();
 
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
+    $dotenv = new Dotenv\Dotenv(getenv("API_PATH"));
+    $dotenv->overload();
 
-    $args = array();
+    $config = require __DIR__ . '/../src/config.php';
+
+    if ($config['settings']['debug']) {
+        ini_set('display_errors', 1);
+        ini_set('error_reporting', E_ALL);
+    }
+
+    $args = [];
     foreach ($GLOBALS['argv'] as $argument) {
         if (preg_match('/\-\-(\w+)=([^ =]+)/', $argument, $match)) {
-            $args[$match[1]] = $match[2];
+            $args[ $match[1] ] = $match[2];
         }
     }
 
     if (isset($args['service'])) {
         switch ($args['service']) {
-            case 'scan':
+            case 'convert':
+
+                $app = new \Slim\App(require __DIR__ . '/../src/config.php');
+                $c = $app->getContainer();
+
+                $service = new Gallery\App\Converter\Job($c);
 
                 exit($service->run($args));
                 break;

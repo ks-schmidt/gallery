@@ -1,10 +1,10 @@
 <?php
 
-namespace Slim;
+namespace Gallery\App\View;
 
 use Psr\Http\Message\ResponseInterface;
 
-class View extends Views\PhpRenderer
+class PhpRenderer extends \Slim\Views\PhpRenderer
 {
     protected $layout;
 

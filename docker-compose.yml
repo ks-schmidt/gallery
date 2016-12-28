@@ -1,0 +1,19 @@
+version: '2'
+services:
+
+  gallery:
+      build: .
+      ports:
+        - "8015:80"
+      environment:
+        - VIRTUAL_HOST=gallery.carokarsten.dev
+        - APP_ENV=docker
+        - API_PATH=/server/http/app
+      volumes:
+        - .:/server/http
+      networks:
+        - webstack
+networks:
+  webstack:
+    external:
+      name: vagrant_webstack
