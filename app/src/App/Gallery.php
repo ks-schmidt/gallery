@@ -6,6 +6,8 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 use Gallery\App\Helper\Thumbnail;
+use Slim\Exception\NotFoundException;
+use Whoops\Exception\ErrorException;
 
 class Gallery
 {
@@ -22,6 +24,10 @@ class Gallery
         $path = $this->getWithTragetPath(
             $request->getAttribute('path', '')
         );
+
+        if (!is_dir($path)) {
+            throw new NotFoundException($request, $response);
+        }
 
         // BREADCRUMB
         $breadcrumb = [];

@@ -2,8 +2,8 @@
 
 return [
     'settings' => [
-        'debug'                  => true,
-        'displayErrorDetails'    => true,
+        'debug'                  => false,
+        'displayErrorDetails'    => false,
         'addContentLengthHeader' => false,
 
         'logger' => [

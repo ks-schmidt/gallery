@@ -26,4 +26,12 @@ class PhpRenderer extends \Slim\Views\PhpRenderer
 
         return $response;
     }
+
+    public function renderPartial(ResponseInterface $response, $template, array $data = [])
+    {
+        $output = parent::render($response, $template, $data);
+        $response->getBody()->write($output);
+
+        return $response;
+    }
 }
