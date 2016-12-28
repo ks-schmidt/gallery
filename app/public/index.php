@@ -9,7 +9,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 use \Gallery\App\View\PhpRenderer;
 
-$dotenv = new Dotenv\Dotenv(getenv("API_PATH"));
+$dotenv = new Dotenv\Dotenv(__DIR__."/../");
 $dotenv->overload();
 
 $app = new \Slim\App(require __DIR__ . '/../src/config.php');
