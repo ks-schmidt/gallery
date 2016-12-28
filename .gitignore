@@ -5,3 +5,4 @@ app/vendor/
 app/public/storage/*
 
 logs/*
+timeline

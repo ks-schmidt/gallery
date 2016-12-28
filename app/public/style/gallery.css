@@ -1,6 +1,13 @@
 body {
     font-family: 'Yantramanav', sans-serif;
     font-weight: 300;
+
+    background-color: #252323;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
 }
 
 img {
@@ -35,10 +42,6 @@ img {
 .gallery-item img {
     width: 188px;
     height: 188px;
-    filter: grayscale(100%);
-}
-.gallery-item img:hover {
-    filter: grayscale(0);
 }
 
 .gallery-folder {
@@ -78,7 +81,7 @@ img {
 }
 
 .gallery-image img {
-    /*border: 3px solid white;*/
+    border: none;
 }
 
 .gallery-image-description {
@@ -93,4 +96,25 @@ img {
 
 .alert-gallery {
     background: #424141;
+}
+
+.breadcrumb > li + li::before {
+    content: "· ";
+    padding: 0 1px;
+}
+.breadcrumb > li + li::before {
+    content: "· ";
+    padding: 0 1px;
+}
+
+.nav-tabs a, .nav-pills a, .breadcrumb a, .pager a {
+    color: #77d45b;
+}
+
+a {
+    color: #77d45b;
+}
+
+a:hover {
+    color: #fff;
 }

@@ -5,6 +5,8 @@ namespace Gallery\App;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
+use Gallery\App\Helper\Thumbnail;
+
 class Gallery
 {
     protected $c;
@@ -22,12 +24,7 @@ class Gallery
         );
 
         // BREADCRUMB
-        $breadcrumb = [
-            [
-                "name" => 'Timeline',
-                "path" => '/',
-            ],
-        ];
+        $breadcrumb = [];
 
         $prevPath = [];
         foreach (explode('/', $this->getRelativePath($path)) as $folder) {
@@ -44,6 +41,9 @@ class Gallery
         }
 
         // FOLDERS & FILES
+        $prevDirectory = null;
+        $idx = 0;
+
         $folders = $files = $preview = [];
         foreach (new \DirectoryIterator($path) as $fileInfo) {
             if ($fileInfo->isDot()) {
@@ -51,40 +51,40 @@ class Gallery
             }
 
             if ($fileInfo->isDir()) {
+                $path = $this->getRelativePath($fileInfo->getRealPath());
 
                 $folders[] = [
-                    "name"      => $fileInfo->getFilename(),
+                    "name"      => htmlentities($fileInfo->getFilename()),
                     "files"     => 000,
-                    "thumbnail" => "04_tn.JPG",
-                    "path"      => $this->getRelativePath($fileInfo->getRealPath()),
+                    "thumbnail" => $this->getRelativePath(Thumbnail::getFirstOfPath($this->getWithTragetPath($path))),
+                    "path"      => $path,
                 ];
             }
 
             if ($fileInfo->isFile()) {
                 if (preg_match('/.*.tn\.jpe?g$/i', $fileInfo->getBasename())) {
+
+                    $idx++;
+                    if ($prevDirectory != $fileInfo->getPath()) {
+                        $idx = 1;
+                    }
+
                     $fThumb = $this->getRelativePath($fileInfo->getRealPath());
                     $fPreview = str_replace('.tn.', '.pv.', $fThumb);
                     $fDownload = str_replace('.pv.', '.dl.', $fPreview);
 
                     $files[] = [
-                        "idx" => "idx",
+                        "idx" => sprintf("%03d", $idx),
 
                         "download" => $fDownload,
                         "preview"  => $fPreview,
                         "thumb"    => $fThumb,
 
-                        "title"       => $fileInfo->getBasename(),
+                        "title"       => basename($fileInfo->getBasename('.tn.' . $fileInfo->getExtension())),
                         "description" => "description",
                     ];
-                }
-            }
-        }
 
-        foreach ($folders as & $folder) {
-            foreach (new \DirectoryIterator($this->getWithTragetPath($folder["path"])) as $fileInfo) {
-                if (preg_match('/.*\.jpe?g$/i', $fileInfo->getBasename())) {
-                    $folder["thumbnail"] = $this->getRelativePath($fileInfo->getRealPath());
-                    break;
+                    $prevDirectory = $fileInfo->getPath();
                 }
             }
         }

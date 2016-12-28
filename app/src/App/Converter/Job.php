@@ -14,10 +14,10 @@ class Job
         $this->c = $c;
     }
 
-    protected $commands = [
-        'download' => \Gallery\App\Converter\Job\Download::class,
+    protected $jobs = [
+        //'download' => \Gallery\App\Converter\Job\Download::class,
         'preview'  => \Gallery\App\Converter\Job\Preview::class,
-        'thumb'    => \Gallery\App\Converter\Job\Thumb::class,
+        //'thumb'    => \Gallery\App\Converter\Job\Thumb::class,
     ];
 
     public function run()
@@ -28,19 +28,20 @@ class Job
         $iTarget = $this->c->get('settings')["converter"]["target"];
 
         $it = new \RegexIterator(new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($iSource['path'], \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST
-        ), $iSource['type'], \RegexIterator::MATCH
+                new \RecursiveDirectoryIterator($iSource['path'], \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST
+            ), $iSource['type'], \RegexIterator::MATCH
         );
 
         foreach ($it as $fileInfo) {
 
             $directory = $helper->getWithTragetPath($helper->getRelativePath($fileInfo->getPath()));
             if ($helper->createDirectory($directory)) {
-                $image = Image::open($fileInfo->getRealPath());
+                $image = Image::open($fileInfo->getRealPath())
+                    ->rotate(array_values([0, 0, 0, 180, 0, 0, -90, 0, 90])[@exif_read_data($fileInfo->getRealPath())['Orientation'] ?: 0]);
 
-                foreach ($this->commands as $command) {
-                    $command::convert($image)->save(
-                        preg_replace('/[\/]+/', '/', sprintf("%s/%s", $directory, $command::getFile($fileInfo)))
+                foreach ($this->jobs as $job) {
+                    $job::convert($image)->save(
+                        preg_replace('/[\/]+/', '/', sprintf("%s/%s", $directory, $this->getFile($fileInfo, null, $job::SUFFIX)))
                     );
                 }
 
@@ -48,5 +49,18 @@ class Job
                 unset($image);
             }
         }
+    }
+
+    public function getFile($fileInfo, $altName = null, $suffix = null)
+    {
+        $filename = basename($fileInfo->getBasename('.' . $fileInfo->getExtension()));
+        if ($altName) {
+            $filename = $altName;
+        }
+
+        $extension = strtolower($fileInfo->getExtension());
+        return sprintf(
+            '%s.%s.%s', $filename, $suffix, $extension
+        );
     }
 }

@@ -6,7 +6,7 @@ if ('cli' == PHP_SAPI) {
     require __DIR__ . '/../vendor/autoload.php';
 
 
-    $dotenv = new Dotenv\Dotenv(getenv("API_PATH"));
+    $dotenv = new Dotenv\Dotenv(__DIR__."/../");
     $dotenv->overload();
 
     $config = require __DIR__ . '/../src/config.php';

@@ -1,7 +1,7 @@
 <?php foreach ($files as $file) : ?>
     <div class="gallery-item">
         <div class="gallery-image" title="image">
-            <a href="<?= $path . $file["preview"] ?>" data-sub-html="#img-description-<?= $file["idx"] ?>"><img src="<?= $path . $file["thumb"] ?>"/></a>
+            <a href="/storage/<?= $file["preview"] ?>" data-sub-html="#img-description-<?= $file["idx"] ?>"><img src="/storage/<?= $file["thumb"] ?>"/></a>
             <div class="gallery-folder-image-count">
                 <?= $file["idx"] ?>
             </div>

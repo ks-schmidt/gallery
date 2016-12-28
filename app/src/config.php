@@ -13,12 +13,12 @@ return [
 
         'converter' => [
             'source' => [
-                'path' => '/server/http/source',
+                'path' => '/var/services/photo',
                 'type' => '/.*\.jpe?g$/i',
             ],
 
             'target' => [
-                'path' => '/server/http/app/public/storage',
+                'path' => '/volume1/web/gallery/app/public/storage',
                 'type' => [
                     'download' => '/.*.dl\.jpe?g$/i',
                     'preview'  => '/.*.pv\.jpe?g$/i',
