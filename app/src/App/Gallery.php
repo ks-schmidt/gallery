@@ -40,14 +40,16 @@ class Gallery
             }
 
             if ($fileInfo->isDir()) {
-                $path = $this->getRelativePath($fileInfo->getRealPath());
+                if (!preg_match('/^@./i', $fileInfo->getBasename())) {
+                    $path = $this->getRelativePath($fileInfo->getRealPath());
 
-                $folders[] = [
-                    "name"      => htmlentities($fileInfo->getFilename()),
-                    "files"     => 000,
-                    "thumbnail" => $this->getRelativePath(Thumbnail::getFirstOfPath($this->getWithTragetPath($path))),
-                    "path"      => $path,
-                ];
+                    $folders[] = [
+                        "name"      => htmlentities($fileInfo->getFilename()),
+                        "files"     => 000,
+                        "thumbnail" => $this->getRelativePath(Thumbnail::getFirstOfPath($this->getWithTragetPath($path))),
+                        "path"      => $path,
+                    ];
+                }
             }
 
             if ($fileInfo->isFile()) {
