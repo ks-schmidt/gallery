@@ -47,6 +47,8 @@ img {
     color: white;
     text-align: center;
     text-shadow: 1px 1px 1px black, 1px -1px 1px black, -1px 1px 1px black, -1px -1px 1px black;
+
+    overflow: hidden;
 }
 
 .gallery-item img, .gallery-item .img-placeholder {
@@ -55,6 +57,12 @@ img {
 
     line-height:188px;
     vertical-align: middle;
+
+    transition: all 0.3s;
+}
+
+.gallery-item img:hover {
+    transform: scale(1.1);
 }
 
 .gallery-folder {

@@ -6,7 +6,7 @@ use Gregwar\Image\Image;
 
 class Download
 {
-    const SUFFIX = "dl";
+    const SUFFIX = "orig";
 
     public static function convert(Image $image)
     {

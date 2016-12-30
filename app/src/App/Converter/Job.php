@@ -15,8 +15,8 @@ class Job
     }
 
     protected $jobs = [
-        //'download' => \Gallery\App\Converter\Job\Download::class,
-        'preview'  => \Gallery\App\Converter\Job\Preview::class,
+        'download' => \Gallery\App\Converter\Job\Download::class,
+        //'preview'  => \Gallery\App\Converter\Job\Preview::class,
         //'thumb'    => \Gallery\App\Converter\Job\Thumb::class,
     ];
 

@@ -17,5 +17,7 @@ class Thumbnail
         foreach ($it as $fileInfo) {
             return $fileInfo->getRealPath();
         }
+
+        return null;
     }
 }

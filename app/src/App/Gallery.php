@@ -62,7 +62,7 @@ class Gallery
 
                     $fThumb = $this->getRelativePath($fileInfo->getRealPath());
                     $fPreview = str_replace('.tn.', '.pv.', $fThumb);
-                    $fDownload = str_replace('.pv.', '.dl.', $fPreview);
+                    $fDownload = str_replace('.pv.', '.orig.', $fPreview);
 
                     $files[] = [
                         "idx" => sprintf("%03d", $idx),
