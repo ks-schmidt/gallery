@@ -33,6 +33,13 @@ img {
     padding-bottom: 50px;
 }
 
+.no-margin {
+    margin:0;
+}
+.no-padding {
+    padding:0;
+}
+
 .gallery-item {
     float: left;
     position: relative;
@@ -42,9 +49,12 @@ img {
     text-shadow: 1px 1px 1px black, 1px -1px 1px black, -1px 1px 1px black, -1px -1px 1px black;
 }
 
-.gallery-item img {
+.gallery-item img, .gallery-item .img-placeholder {
     width: 188px;
     height: 188px;
+
+    line-height:188px;
+    vertical-align: middle;
 }
 
 .gallery-folder {

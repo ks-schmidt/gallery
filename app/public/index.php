@@ -19,6 +19,29 @@
 
         $app->add(new \Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware);
     }
+    else {
+
+        // ERRORs
+
+        $c['errorHandler'] = function ($c) {
+            return function (Request $request, Response $response, \Exception $exception) use ($c) {
+                $response->getBody()->rewind();
+                return $c->view->renderPartial($response->withStatus(500), '/../../public/style/error/html/500.html');
+            };
+        };
+        $c['notFoundHandler'] = function ($c) {
+            return function (Request $request, Response $response) use ($c) {
+                $response->getBody()->rewind();
+                return $c->view->renderPartial($response->withStatus(404), '/../../public/style/error/html/404.html');
+            };
+        };
+        $c['notAllowedHandler'] = function ($c) {
+            return function (Request $request, Response $response) use ($c) {
+                $response->getBody()->rewind();
+                return $c->view->renderPartial($response->withStatus(403), '/../../public/style/error/html/403.html');
+            };
+        };
+    }
 
     $c = $app->getContainer();
     $c['logger'] = function ($c) {
@@ -37,28 +60,6 @@
         $view->setLayout("common/layout/bootstrap.phtml");
 
         return $view;
-    };
-
-
-    // ERRORs
-
-    $c['errorHandler'] = function ($c) {
-        return function (Request $request, Response $response, \Exception $exception) use ($c) {
-            $response->getBody()->rewind();
-            return $c->view->renderPartial($response->withStatus(500), '/../../public/style/error/html/500.html');
-        };
-    };
-    $c['notFoundHandler'] = function ($c) {
-        return function (Request $request, Response $response) use ($c) {
-            $response->getBody()->rewind();
-            return $c->view->renderPartial($response->withStatus(404), '/../../public/style/error/html/404.html');
-        };
-    };
-    $c['notAllowedHandler'] = function ($c) {
-        return function (Request $request, Response $response) use ($c) {
-            $response->getBody()->rewind();
-            return $c->view->renderPartial($response->withStatus(403), '/../../public/style/error/html/403.html');
-        };
     };
 
 

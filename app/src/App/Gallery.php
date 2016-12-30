@@ -21,29 +21,12 @@ class Gallery
 
     public function handle(Request $request, Response $response, $args)
     {
-        $path = $this->getWithTragetPath(
+        $root = $this->getWithTragetPath(
             $request->getAttribute('path', '')
         );
 
-        if (!is_dir($path)) {
+        if (!is_dir($root)) {
             throw new NotFoundException($request, $response);
-        }
-
-        // BREADCRUMB
-        $breadcrumb = [];
-
-        $prevPath = [];
-        foreach (explode('/', $this->getRelativePath($path)) as $folder) {
-            if (empty($folder)) {
-                continue;
-            }
-
-            $breadcrumb[] = [
-                "name" => htmlentities($folder),
-                "path" => '/' . join('/', array_merge($prevPath, [$folder])),
-            ];
-
-            $prevPath[] = $folder;
         }
 
         // FOLDERS & FILES
@@ -51,7 +34,7 @@ class Gallery
         $idx = 0;
 
         $folders = $files = $preview = [];
-        foreach (new \DirectoryIterator($path) as $fileInfo) {
+        foreach (new \DirectoryIterator($root) as $fileInfo) {
             if ($fileInfo->isDot()) {
                 continue;
             }
@@ -97,11 +80,13 @@ class Gallery
 
         return $this->c->view->render(
             $response, "gallery/index.phtml", [
-                'path' => "/storage/",
+                'path' => "/storage",
 
-                'breadcrumb' => $breadcrumb,
-                'folders'    => $folders,
-                'files'      => $files,
+                "root" => $this->getRelativePath($root),
+                'up'   => $this->getRelativePath(substr($root, 0, strrpos(rtrim($root, '/'), '/'))),
+
+                'folders' => $folders,
+                'files'   => $files,
             ]
         );
     }
@@ -142,6 +127,11 @@ class Gallery
         $sPathArray = explode('/', $this->c->get('settings')['converter']['source']['path']);
         $tPathArray = explode('/', $this->c->get('settings')['converter']['target']['path']);
 
-        return rtrim('/' . join('/', array_diff($pathArray, $sPathArray, $tPathArray)), '/');
+        $result = rtrim('/' . join('/', array_diff($pathArray, $sPathArray, $tPathArray)), '/');
+        if (empty($result)) {
+            $result = '/';
+        }
+
+        return $result;
     }
 }

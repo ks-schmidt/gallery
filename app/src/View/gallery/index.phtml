@@ -1,17 +1,17 @@
-
 <h3 class="text-center">
-    <small><span class="glyphicon glyphicon-picture"></span></small><br>carokarsten.ddns.net<br><small>BILDER GALERIE</small>
+    <small>
+        <a href="/"><span class="glyphicon glyphicon-camera"></span></a>
+    </small><br>carokarsten.ddns.net<br><small>TIMELINE</small>
 </h3>
 
-<?= $this->fetch('common/breadcrumb.phtml', ['breadcrumb' => $breadcrumb]); ?>
-
 <div id="lightgallery">
-    <?= $this->fetch('gallery/partial/folder.phtml', ['path' => $path, 'folders' => $folders]); ?>
+    <?= $this->fetch('gallery/partial/folder/up.phtml', ['up' => ($up == $root ? null : $up)]); ?>
+    <?= $this->fetch('gallery/partial/folder/down.phtml', ['path' => $path, 'folders' => $folders]); ?>
     <?= $this->fetch('gallery/partial/image.phtml', ['path' => $path, 'files' => $files]); ?>
 
     <div class="clearfix"></div>
 </div>
 
-<div class="text-center mtxl mbxl">
+<div class="text-center mbxl">
     <span style="font-size:0.9em">&copy;<br>2016</span>
 </div>
