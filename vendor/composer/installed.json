@@ -1,0 +1,116 @@
+[
+    {
+        "name": "phpfluent/callback",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/PHPFluent/Callback.git",
+            "reference": "fd41152a496917fd4854d13388084de9688e7edc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/PHPFluent/Callback/zipball/fd41152a496917fd4854d13388084de9688e7edc",
+            "reference": "fd41152a496917fd4854d13388084de9688e7edc",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "phpmd/phpmd": "~2.2",
+            "phpunit/phpunit": "~4.6",
+            "squizlabs/php_codesniffer": "~2.3"
+        },
+        "time": "2015-06-03 19:24:39",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "PHPFluent\\Callback\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Henrique Moody",
+                "email": "henriquemoody@gmail.com",
+                "homepage": "http://about.me/henriquemoody"
+            }
+        ],
+        "description": "Allows you execute callbacks in a more dynamic way",
+        "homepage": "https://github.com/PHPFluent/Callback",
+        "keywords": [
+            "callable",
+            "callback",
+            "closure"
+        ]
+    },
+    {
+        "name": "arara/process",
+        "version": "1.10.0",
+        "version_normalized": "1.10.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Arara/Process.git",
+            "reference": "13a5bce650c018e45eec8a9de5bc1c4d696a4082"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Arara/Process/zipball/13a5bce650c018e45eec8a9de5bc1c4d696a4082",
+            "reference": "13a5bce650c018e45eec8a9de5bc1c4d696a4082",
+            "shasum": ""
+        },
+        "require": {
+            "ext-pcntl": "*",
+            "ext-posix": "*",
+            "php": ">=5.4.0",
+            "phpfluent/callback": "~1.0"
+        },
+        "require-dev": {
+            "ext-uopz": "*",
+            "phpmd/phpmd": "~2.2",
+            "phpunit/phpunit": "~4.6",
+            "squizlabs/php_codesniffer": "~2.3"
+        },
+        "time": "2015-06-03 19:54:33",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.10-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Arara\\Process": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Henrique Moody",
+                "email": "henriquemoody@gmail.com"
+            }
+        ],
+        "description": "Provides a better API to work with processes on Unix-like systems",
+        "homepage": "https://github.com/Arara/Process",
+        "keywords": [
+            "command",
+            "daemon",
+            "fork",
+            "multitasking",
+            "pcntl",
+            "posix",
+            "process",
+            "spawn",
+            "task"
+        ]
+    }
+]

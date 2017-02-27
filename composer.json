@@ -1,0 +1,5 @@
+{
+    "require": {
+        "arara/process": "^1.10"
+    }
+}

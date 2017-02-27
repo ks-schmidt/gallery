@@ -1,94 +1,92 @@
 <?php
 
-    date_default_timezone_set("Europe/Berlin");
-
     require '../vendor/autoload.php';
 
     use \Psr\Http\Message\ServerRequestInterface as Request;
     use \Psr\Http\Message\ResponseInterface as Response;
 
-    use \Gallery\App\View\PhpRenderer;
+    use \Gallery\App\Configuration;
+    use \Gallery\App\Gallery;
 
-    $dotenv = new Dotenv\Dotenv(__DIR__."/../");
+    $dotenv = new Dotenv\Dotenv(getenv("API_PATH"));
     $dotenv->overload();
 
-    $app = new \Slim\App(require __DIR__ . '/../src/config.php');
-    if ($app->getContainer()->get('settings')['debug']) {
-        ini_set('display_errors', 1);
-        ini_set('error_reporting', E_ALL);
+    date_default_timezone_set(getenv('TIMEZONE'));
 
-        $app->add(new \Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware);
-    }
-    else {
-
-        // ERRORs
-
-        $c['errorHandler'] = function ($c) {
-            return function (Request $request, Response $response, \Exception $exception) use ($c) {
-                $response->getBody()->rewind();
-                return $c->view->renderPartial($response->withStatus(500), '/../../public/style/error/html/500.html');
-            };
-        };
-        $c['notFoundHandler'] = function ($c) {
-            return function (Request $request, Response $response) use ($c) {
-                $response->getBody()->rewind();
-                return $c->view->renderPartial($response->withStatus(404), '/../../public/style/error/html/404.html');
-            };
-        };
-        $c['notAllowedHandler'] = function ($c) {
-            return function (Request $request, Response $response) use ($c) {
-                $response->getBody()->rewind();
-                return $c->view->renderPartial($response->withStatus(403), '/../../public/style/error/html/403.html');
-            };
-        };
-    }
-
-    $c = $app->getContainer();
-    $c['logger'] = function ($c) {
-        $settings = $c->get('settings')['logger'];
-        $logger = new Monolog\Logger($settings['name']);
-        $logger->pushProcessor(new Monolog\Processor\UidProcessor());
-        $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'] . "/info.log", "info"));
-        $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'] . "/debug.log", "debug"));
-        $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'] . "/warning.log", "warning"));
-        $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'] . "/error.log", "error"));
-
-        return $logger;
-    };
-    $c['view'] = function ($c) {
-        $view = new PhpRenderer("../src/View/");
-        $view->setLayout("common/layout/bootstrap.phtml");
-
-        return $view;
-    };
-
-
-    // ROUTEs
-
-    $app->get('/[{path:.*}]', '\Gallery\App\Gallery:handle')->add(function ($request, $response, $next) {
+    $app = new \Slim\App(['settings' => Configuration::get('settings')]);
+    $app->add(function ($request, $response, $next) {
         $uri = $request->getUri();
         $uri = $uri->withPath(strtolower($uri->getPath()));
         $request = $request->withUri($uri);
 
-        // global middleware
-        // ... CASE INSENSITIVE ROUTE
         return $next($request, $response);
+    });
+
+    // ERRORs
+
+    if (!Configuration::get('settings.debug')) {
+        ini_set('error_reporting', E_ALL);
+        ini_set('display_errors', '1');
+        ini_set('display_startup_errors', '1');
+
+    } else {
+
+        $c = $app->getContainer();
+
+        $c['errorHandler'] = function () {
+            return function (Request $request, Response $response, \Exception $exception) {
+                $response->getBody()->rewind();
+
+                return Configuration::get('view')->renderPartial(
+                    $response->withStatus(500), '/../../public/style/error/html/500.html'
+                );
+            };
+        };
+        $c['phpErrorHandler'] = function () {
+            return function (Request $request, Response $response, \Exception $exception) {
+                $response->getBody()->rewind();
+
+                return Configuration::get('view')->renderPartial(
+                    $response->withStatus(500), '/../../public/style/error/html/500.html'
+                );
+            };
+        };
+        $c['notFoundHandler'] = function () {
+            return function (Request $request, Response $response) {
+                $response->getBody()->rewind();
+
+                return Configuration::get('view')->renderPartial(
+                    $response->withStatus(404), '/../../public/style/error/html/404.html'
+                );
+            };
+        };
+        $c['notAllowedHandler'] = function () {
+            return function (Request $request, Response $response) {
+                $response->getBody()->rewind();
+
+                Configuration::get('view')->renderPartial(
+                    $response->withStatus(403), '/../../public/style/error/html/403.html'
+                );
+            };
+        };
+    }
+
+    // ROUTEs
+
+    $app->get('/[{path:.*}]', function (Request $request, Response $response, $next) {
+        return (new Gallery())->handle($request, $response);
 
     })->add(function (Request $request, Response $response, $next) {
-        $this->logger->info(
+        Configuration::get('logger')->info(
             'request started'
         );
 
-        // log
-        // ... BEFORE HANDLING REQUEST
         return $next($request, $response);
 
     })->add(function (Request $request, Response $response, $next) {
         $response = $next($request, $response);
 
-        // log
-        // ... AFTER HANDLING REQUEST
-        $this->logger->info(
+        Configuration::get('logger')->info(
             'request finished with: ' . $response->getStatusCode()
         );
 

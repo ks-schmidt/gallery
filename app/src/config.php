@@ -2,8 +2,8 @@
 
 return [
     'settings' => [
-        'debug'                  => false,
-        'displayErrorDetails'    => false,
+        'debug'                  => true,
+        'displayErrorDetails'    => true,
         'addContentLengthHeader' => false,
 
         'logger' => [
@@ -13,17 +13,12 @@ return [
 
         'converter' => [
             'source' => [
-                'path' => '/var/services/photo',
-                'type' => '/.*\.jpe?g$/i',
+                'path'   => '/server/http/app/public/source',
+                'filter' => '/.*\.jpe?g$/i',
             ],
 
             'target' => [
-                'path' => '/volume1/web/gallery/app/public/storage',
-                'type' => [
-                    'download' => '/.*.dl\.jpe?g$/i',
-                    'preview'  => '/.*.pv\.jpe?g$/i',
-                    'thumb'    => '/.*.tn\.jpe?g$/i',
-                ],
+                'path' => '/server/http/app/public/storage',
             ],
         ],
     ],

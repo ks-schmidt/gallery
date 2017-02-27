@@ -3,6 +3,7 @@
 
 app/vendor/
 app/public/storage/*
+app/public/source/
 
 logs/*
 timeline

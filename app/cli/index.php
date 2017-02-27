@@ -1,19 +1,22 @@
 <?php
 
+use \Gallery\App\Configuration;
+use \Gallery\App\Converter\Service as Converter;
+
 if ('cli' == PHP_SAPI) {
 
     date_default_timezone_set("Europe/Berlin");
     require __DIR__ . '/../vendor/autoload.php';
 
-
-    $dotenv = new Dotenv\Dotenv(__DIR__."/../");
+    $dotenv = new Dotenv\Dotenv(__DIR__ . "/../");
     $dotenv->overload();
 
-    $config = require __DIR__ . '/../src/config.php';
+    date_default_timezone_set(getenv('TIMEZONE'));
 
-    if ($config['settings']['debug']) {
-        ini_set('display_errors', 1);
+    if (Configuration::get('settings.debug')) {
         ini_set('error_reporting', E_ALL);
+        ini_set('display_errors', '1');
+        ini_set('display_startup_errors', '1');
     }
 
     $args = [];
@@ -24,20 +27,29 @@ if ('cli' == PHP_SAPI) {
     }
 
     if (isset($args['service'])) {
-        switch ($args['service']) {
-            case 'convert':
 
-                $app = new \Slim\App(require __DIR__ . '/../src/config.php');
-                $c = $app->getContainer();
+        $service = $args['service'];
+        switch ($service) {
 
-                $service = new Gallery\App\Converter\Job($c);
+            case 'converter':
+                $converter = new Converter();
+                if (isset($args['action'])) {
 
-                exit($service->run($args));
+                    $action = $args['action'];
+                    switch ($action) {
+
+                        case 'read':
+                            $converter->read();
+                        case 'convert':
+                            exit($converter->convert());
+                            break;
+                    }
+                }
                 break;
         }
     }
 
     throw new Exception(
-        'service not permitted or found'
+        'service not supported or found'
     );
 }
